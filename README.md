@@ -2,6 +2,9 @@
 # Stream Website (FastAPI Based)
 
 An automated tool to set up a live streaming website using FastAPI and MediaMTX.
+You can watch any hls(m3u8) stream from this website.
+It automatically start the stream for local "http://localhost:8888/live/stream/index.m3u8".
+For public stream read last part.
 
 ## Installation
 
@@ -32,7 +35,6 @@ Your stream will be available at:
 ```
 http://localhost:8888/live/stream/index.m3u8
 ```
-
 ## How to Stream with OBS
 
 To start streaming from OBS (Open Broadcaster Software):
@@ -50,6 +52,10 @@ To start streaming from OBS (Open Broadcaster Software):
 5. Click **Start Streaming**.
 
 Your stream will now be available at the m3u8 link above.
+## Website:
+<img width="1918" height="955" alt="Screenshot_13" src="https://github.com/user-attachments/assets/50b9e729-958e-4cb2-95e8-4d01fb492b8c" />
+<img width="1919" height="1079" alt="Screenshot_14" src="https://github.com/user-attachments/assets/dfee904a-3979-439e-a819-c0f20aafb7d8" />
+
 
 ## Important: Port Configuration & Public Access
 
