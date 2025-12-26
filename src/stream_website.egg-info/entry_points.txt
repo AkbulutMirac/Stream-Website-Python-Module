@@ -1,2 +1,2 @@
 [console_scripts]
-stream-start = stream_website.run:main
+stream_website = stream_website.run:main

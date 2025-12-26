@@ -35,6 +35,7 @@ def main():
 
     print(f"{system.capitalize()} üzerinde MediaMTX başlatılıyor...")
     mediamtx_proc = subprocess.Popen([str(mediamtx_path), str(mediamtx_config)])
+    print("Github Repository:https://github.com/AkbulutMirac/Stream-Website-Python-Module")
 
     try:
         import uvicorn

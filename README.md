@@ -6,7 +6,7 @@ An automated tool to set up a live streaming website using FastAPI and MediaMTX.
 ## Installation
 
 ```bash
-pip install stream_website
+pip install stream-website
 ```
 
 ## Usage

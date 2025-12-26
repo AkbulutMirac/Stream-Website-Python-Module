@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: stream_website
-Version: 0.1.0
+Version: 0.1.3
 Summary: One-command streaming website starter
 Requires-Python: >=3.9
 Description-Content-Type: text/markdown
@@ -15,7 +15,7 @@ An automated tool to set up a live streaming website using FastAPI and MediaMTX.
 ## Installation
 
 ```bash
-pip install stream_website
+pip install stream-website
 ```
 
 ## Usage
