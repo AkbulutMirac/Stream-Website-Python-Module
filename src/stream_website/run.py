@@ -6,7 +6,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 
 def main():
-    # İşletim sistemini tespit et
+    
     system = platform.system().lower() 
     
     if system == "windows":
@@ -22,7 +22,6 @@ def main():
     mediamtx_path = BASE_DIR / "MediaMTX" / executable_name
     mediamtx_config = BASE_DIR / "MediaMTX" / "mediamtx.yml"
 
-    # Linux ve Mac'te dosyaya çalıştırma izni (chmod +x) vermemiz gerekebilir
     if system != "windows":
         try:
             os.chmod(mediamtx_path, 0o755)
