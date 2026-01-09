@@ -114,11 +114,16 @@
             width: 100%;
             height: auto;
             display: block;
-            /* BULANIKLIK ÇÖZÜMÜ: Filtreleri kaldırdık, rendering'i düzelttik */
             object-fit: contain;
-            image-rendering: high-quality;
-            filter: contrast(1.1) saturate(1.1);
-            -webkit-filter: contrast(1.1) saturate(1.1);
+            /* KALITE AYARLARI - GPU hızlandırma ve netlik için */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            -webkit-transform: translateZ(0); /* GPU hızlandırma */
+            transform: translateZ(0);
+            will-change: transform; /* Performans ipucu */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            /* Filter'ları kaldırdık - tarayıcı rendering'ini bozuyor */
         }
 
         .custom-controls {
@@ -218,7 +223,15 @@
 
     <div class="container">
         <div class="video-wrapper">
-            <video id="videoElement" playsinline autoplay muted></video>
+            <video id="videoElement" 
+                   playsinline 
+                   autoplay 
+                   muted
+                   x-webkit-airplay="allow"
+                   webkit-playsinline="true"
+                   disablePictureInPicture="false"
+                   controlsList="nodownload"
+            ></video>
             <div class="offline-message" id="offlineMessage">YAYIN YOK</div>
             
             <div class="custom-controls" id="customControls">
@@ -266,12 +279,35 @@
 
             if (Hls.isSupported()) {
                 hls = new Hls({
-                    // NETLİK AYARLARI
-                    capLevelToPlayerSize: false, // Player boyutuna göre kısıtlamayı kapattık ki HD gelsin
-                    enableWorker: true,
+                    // === KALITE MAKSİMİZASYONU ===
+                    capLevelToPlayerSize: false,     // Çözünürlük kısıtlamasını kapat
+                    enableWorker: true,               // Web Worker ile performans
+                    lowLatencyMode: true,             // Düşük gecikme modu
+                    
+                    // === BUFFER AYARLARI (Twitch/Kick gibi) ===
+                    maxBufferLength: 30,              // 30 saniye buffer
+                    maxMaxBufferLength: 60,           // Maksimum 60 saniye
+                    maxBufferSize: 60 * 1000 * 1000,  // 60MB buffer
+                    maxBufferHole: 0.5,               // Buffer boşluk toleransı
+                    
+                    // === ABR (Adaptive Bitrate) - Kalite Seçimi ===
+                    startLevel: -1,                   // Otomatik en iyi kalite
                     autoStartLoad: true,
-                    startLevel: -1, // En iyi kaliteyle başla (Auto)
-                    abrEwmaDefaultEstimate: 5000000 // 5Mbps tahmini ile başla
+                    abrEwmaDefaultEstimate: 10000000, // 10 Mbps başlangıç tahmini
+                    abrBandWidthFactor: 0.95,         // Bant genişliğinin %95'ini kullan
+                    abrBandWidthUpFactor: 0.7,        // Kalite artışı için tolerans
+                    abrMaxWithRealBitrate: true,      // Gerçek bitrate kullan
+                    
+                    // === PERFORMANS ve STABİLİTE ===
+                    backBufferLength: 30,             // Geriye dönük 30 sn buffer
+                    liveSyncDurationCount: 3,         // Canlı senkron için segment sayısı
+                    liveMaxLatencyDurationCount: 10,  // Maks gecikme toleransı
+                    liveDurationInfinity: true,       // Canlı yayın sonsuz süre
+                    
+                    // === HATA KURTARMA ===
+                    fragLoadingMaxRetry: 6,
+                    manifestLoadingMaxRetry: 4,
+                    levelLoadingMaxRetry: 4
                 });
 
                 hls.loadSource(url);

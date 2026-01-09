@@ -332,12 +332,14 @@ hlsAllowOrigins: ['*']
 hlsTrustedProxies: []
 # By default, HLS is generated only when requested by a user.
 # This option allows to generate it always, avoiding the delay between request and generation.
-hlsAlwaysRemux: no
-## HLS Low Latency ve minimum gecikme için ayarlar
+hlsAlwaysRemux: yes
+## HLS Kalite ve Düşük Gecikme Dengesi
+## lowLatency: Düşük gecikme ama biraz kalite kaybı
+## fmp4: Daha iyi kalite, biraz daha fazla gecikme
 hlsVariant: lowLatency
-hlsSegmentCount: 7
-hlsSegmentDuration: 0.5s
-hlsPartDuration: 100ms
+hlsSegmentCount: 10
+hlsSegmentDuration: 1s
+hlsPartDuration: 200ms
 # Maximum size of each segment.
 # This prevents RAM exhaustion.
 hlsSegmentMaxSize: 50M
