@@ -12,9 +12,9 @@ def main():
     if system == "windows":
         executable_name = "mediamtx.exe"
     elif system == "linux":
-        executable_name = "mediamtx_linux"
+        executable_name = "mediamtx_linux/mediamtx"
     elif system == "darwin": # macOS
-        executable_name = "mediamtx_darwin"
+        executable_name = "mediamtx_darwin/mediamtx"
     else:
         print(f"Hata: {system} işletim sistemi desteklenmiyor.")
         return
