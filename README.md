@@ -10,24 +10,21 @@ For public stream read last part.
 
 ```mermaid
 flowchart LR
-    OBS["OBS Studio"]
+    OBS["OBS Studio<br/>(streamer)"]
 
     subgraph PC["Your computer"]
-        RUN["run.py"]
         MTX["MediaMTX<br/>RTMP in, HLS out"]
-        WEB["FastAPI + Uvicorn<br/>port 8000"]
-        RUN -- starts --> MTX
-        RUN -- starts --> WEB
+        WEB["Website<br/>FastAPI"]
     end
 
-    subgraph VIEWER["Viewer's browser"]
-        PAGE["Website<br/>Shaka Player"]
-    end
+    VIEWER["Viewer's browser"]
 
-    OBS -- "RTMP :1935<br/>key: stream" --> MTX
-    WEB -- "web page :8000" --> PAGE
-    MTX -- "HLS video :8888<br/>/live/stream/index.m3u8" --> PAGE
+    OBS -- "Step 1: sends stream<br/>RTMP :1935" --> MTX
+    WEB -- "Step 2: opens website<br/>:8000" --> VIEWER
+    MTX -- "Step 3: plays video<br/>HLS :8888" --> VIEWER
 ```
+
+The `python -m stream_website` command starts both MediaMTX and the website. OBS sends the stream to MediaMTX, the viewer opens the website, and the player on the page pulls the video from MediaMTX.
 
 ## Installation
 
