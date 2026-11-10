@@ -12,6 +12,11 @@ For public stream read last part.
 pip install stream-website
 ```
 
+> **Apple Silicon (M1/M2/M3/M4) Mac users:** The bundled MediaMTX binary is built for Intel and runs through Rosetta 2. If you get a `Bad CPU type in executable` error, install Rosetta once:
+> ```bash
+> softwareupdate --install-rosetta
+> ```
+
 ## Usage
 
 Simply run the following command:
