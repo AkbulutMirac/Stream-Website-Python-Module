@@ -6,6 +6,29 @@ You can watch any hls(m3u8) stream from this website.
 It automatically starts the stream for local "http://localhost:8888/live/stream/index.m3u8".
 For public stream read last part.
 
+## How it works
+
+```mermaid
+flowchart LR
+    OBS["OBS Studio"]
+
+    subgraph PC["Your computer"]
+        RUN["run.py"]
+        MTX["MediaMTX<br/>RTMP in, HLS out"]
+        WEB["FastAPI + Uvicorn<br/>port 8000"]
+        RUN -- starts --> MTX
+        RUN -- starts --> WEB
+    end
+
+    subgraph VIEWER["Viewer's browser"]
+        PAGE["Website<br/>Shaka Player"]
+    end
+
+    OBS -- "RTMP :1935<br/>key: stream" --> MTX
+    WEB -- "web page :8000" --> PAGE
+    MTX -- "HLS video :8888<br/>/live/stream/index.m3u8" --> PAGE
+```
+
 ## Installation
 
 ```bash
